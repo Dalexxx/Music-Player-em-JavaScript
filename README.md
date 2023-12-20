@@ -1,2 +1,2 @@
-# music_player
+# Player de música em HTML e CSS com JavaScript
  
