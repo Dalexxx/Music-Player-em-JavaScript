@@ -53,7 +53,7 @@ const twentyfour = {
 let isPlaying = false;
 let isShuffled = false;
 let repeatOn = false;
-const originalPlaylist = [JorgeBenJor, nao_posso, sevenk, toxico, twentyfour];
+const originalPlaylist = JSON.parse(localStorage.getItem('playlist')) ?? [JorgeBenJor, nao_posso, sevenk, toxico, twentyfour,];
 let sortedPlaylist = [...originalPlaylist]
 let index = 0;
 
@@ -202,6 +202,7 @@ function likeButtonClicked(){
         sortedPlaylist[index].liked = false;
     }
     likeButtonRender();
+    localStorage.setItem('playlist', JSON.stringify(originalPlaylist));
 }
 
 //execuções de função
