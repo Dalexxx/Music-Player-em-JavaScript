@@ -6,6 +6,7 @@ const cover = document.getElementById('cover');
 const play = document.getElementById('play');
 const next = document.getElementById('next');
 const previous = document.getElementById('previous');
+const likeButton = document.getElementById('like');
 const currentProgress = document.getElementById('current-progress');
 const progressContainer = document.getElementById('progress-container');
 const shuffleButton = document.getElementById('shuffle');
@@ -17,31 +18,36 @@ const totalTime = document.getElementById('total-time');
 const JorgeBenJor = {
     songName : 'Jorge Ben Jor',
     artist : 'Big Rush',
-    file : 'Jorge_Ben_Jor',   
+    file : 'Jorge_Ben_Jor',
+    liked : false,   
 };
 
 const nao_posso = {
     songName : 'Não posso',
     artist : 'Rudies Flacko, Mav',
-    file : 'Nao_posso',   
+    file : 'Nao_posso',
+    liked : false,   
 };
 
 const sevenk = {
     songName : '7k',
     artist : 'Yung Buda',
-    file : '7k',   
+    file : '7k', 
+    liked : false,  
 };
 
 const toxico = {
     songName : 'Toxico',
     artist : 'Dessik',
-    file : 'Toxico',   
+    file : 'Toxico',
+    liked : false,
 };
 
 const twentyfour = {
     songName : '2024',
     artist : 'Playboi Carti',
     file : '2024',
+    liked : false,
 };
 
 let isPlaying = false;
@@ -75,11 +81,25 @@ function playPauseDecider(){
     }
 }
 
+function likeButtonRender(){
+    if (sortedPlaylist[index].liked === true){
+        likeButton.querySelector('.bi').classList.remove('bi-heart');
+        likeButton.querySelector('.bi').classList.add('bi-heart-fill');
+        likeButton.classList.add('button-active');
+    }
+    else{
+        likeButton.querySelector('.bi').classList.add('bi-heart');
+        likeButton.querySelector('.bi').classList.remove('bi-heart-fill');
+        likeButton.classList.remove('button-active');
+    }
+}
+
 function initializeSong(){
     cover.src = `images/${sortedPlaylist[index].file}.jpg`;
     song.src = `songs/${sortedPlaylist[index].file}.mp3`;
     songName.innerText = sortedPlaylist[index].songName;
     bandName.innerText = sortedPlaylist[index].artist;
+    likeButtonRender();
 }
 
 function previousSong(){
@@ -175,6 +195,15 @@ function updateTotalTime(){
     totalTime.innerText = toHHMMSS(song.duration);
 }
 
+function likeButtonClicked(){
+    if(sortedPlaylist[index].liked === false){
+        sortedPlaylist[index].liked = true;
+    } else {
+        sortedPlaylist[index].liked = false;
+    }
+    likeButtonRender();
+}
+
 //execuções de função
 initializeSong();
 
@@ -188,3 +217,4 @@ song.addEventListener('loadedmetadata', updateTotalTime);
 progressContainer.addEventListener('click', jumpTo);
 shuffleButton.addEventListener('click', shuffleButtonClicked);
 repeatButton.addEventListener('click', repeatButtonClicked);
+likeButton.addEventListener('click', likeButtonClicked)
